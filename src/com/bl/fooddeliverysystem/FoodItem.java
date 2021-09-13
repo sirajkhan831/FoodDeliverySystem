@@ -1,11 +1,14 @@
 package com.bl.fooddeliverysystem;
 
-public class FoodItem {
-    public String name;
-    public Taste taste;
-    public Category category;
-    public VegType vegType;
-    public int price;
+public class FoodItem{
+    String name;
+    Taste taste;
+    Category category;
+    VegType vegType;
+    int price;
+
+    public FoodItem() {
+    }
 
     enum Taste {SWEET, SOUR, SPICY, SALTY}
 
@@ -15,5 +18,9 @@ public class FoodItem {
 
     public String toString() {
         return "Name : "+name+" | Taste : " + taste + " | Category : " + category + " | VegType : " + vegType + " | Price : " + price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

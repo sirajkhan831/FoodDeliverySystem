@@ -1,6 +1,6 @@
 package com.bl.fooddeliverysystem;
 
-public class Biryani extends FoodItem{
+public class Biryani extends FoodItem {
 
     public Biryani() {
         name = "Biryani";

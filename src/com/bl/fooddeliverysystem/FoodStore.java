@@ -19,7 +19,6 @@ public class FoodStore {
             {
                 foodList.remove(foodList.get(i));
             }
-            else System.out.println("The name entered is incorrect.");
         }
     }
 
