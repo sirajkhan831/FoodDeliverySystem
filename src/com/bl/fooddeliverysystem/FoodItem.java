@@ -17,10 +17,10 @@ public class FoodItem{
     enum VegType {VEG, NON_VEG}
 
     public String toString() {
-        return "Name : "+name+" | Taste : " + taste + " | Category : " + category + " | VegType : " + vegType + " | Price : " + price;
+        return "Name : "+name+" | Taste : " + taste + " | Category : " + category + " | VegType : " + vegType + " | Price : " + price+"\n";
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public String getName() {
+        return name;
     }
 }

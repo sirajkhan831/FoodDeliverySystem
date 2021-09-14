@@ -4,43 +4,50 @@ import java.util.Scanner;
 
 // controller layer
 public class Application {
-    static Pizza pizza = new Pizza();
-    static Biryani biryani = new Biryani();
-    static MasalaDosa masalaDosa = new MasalaDosa();
-    static TandooriRoti tandooriRoti = new TandooriRoti();
+    Pizza pizza = new Pizza();
+    Biryani biryani = new Biryani();
+    MasalaDosa masalaDosa = new MasalaDosa();
+    TandooriRoti tandooriRoti = new TandooriRoti();
 
-    static UserInterface userInterface = new UserInterface();
+    static UserInterface userInterface = UserInterface.getInstance();
 
-    public static void main(String[] args){
-        FoodStore foodStore = new FoodStore();
+    public static void main(String[] args) {
+        FoodStore foodStore = FoodStore.getInstance();
         userInterface.showMenu(foodStore);
         userInterface.print(foodStore.getFoodList());
     }
 
-    boolean handleUserSelection(int option, FoodStore foodStore){
+    boolean handleUserSelection(int option, FoodStore foodStore) {
         switch (option) {
             case 1:
-                System.out.println("Enter choice of the food : \n 1. Biryani \n 2. Pizza \n 3. Masala Dosa \n 4. Tandoori Roti");
+                System.out.println("Enter choice of the food : \n 1. Biryani \n 2. Pizza \n 3. Masala Dosa \n 4. Tandoori Roti \n 5. New Item");
                 int choice = new Scanner(System.in).nextInt();
                 switch (choice) {
                     case 1 -> foodStore.add(biryani);
                     case 2 -> foodStore.add(pizza);
                     case 3 -> foodStore.add(masalaDosa);
                     case 4 -> foodStore.add(tandooriRoti);
+                    case 5 -> addNewItem(foodStore);
                 }
                 System.out.println("Food Added");
                 break;
             case 2:
                 userInterface.print(foodStore.getFoodList());
-                System.out.println("Please enter the name of the food that you want to remove : ");
-                String foodName = new Scanner(System.in).nextLine();
-                foodStore.remove(foodName);
-                break;
+                try {
+                    if (foodStore.getFoodList().get(0) != null) {
+                        System.out.println("Please enter the name of the food that you want to remove : ");
+                        String foodName = new Scanner(System.in).nextLine();
+                        foodStore.remove(foodName);
+                        break;
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("No item in the list to remove");
+                }
             case 3:
                 userInterface.print(foodStore.getFoodList());
                 break;
             case 4:
-                addNewItem(foodStore);
+                editItem(foodStore);
                 break;
             case 9:
                 return false;
@@ -48,7 +55,7 @@ public class Application {
         return true;
     }
 
-    public void addNewItem(FoodStore foodStore){
+    public void addNewItem(FoodStore foodStore) {
         FoodItem foodItem = new FoodItem();
         System.out.println("Enter name of the food : ");
         foodItem.name = new Scanner(System.in).nextLine();
@@ -72,6 +79,7 @@ public class Application {
         System.out.println("Select VegType : 1.VEG  2.NON_VEG");
         int option2 = new Scanner(System.in).nextInt();
         foodItem.vegType = null;
+
         switch (option2) {
             case 1 -> foodItem.vegType = FoodItem.VegType.VEG;
             case 2 -> foodItem.vegType = FoodItem.VegType.NON_VEG;
@@ -79,5 +87,17 @@ public class Application {
         System.out.println("Enter Price : ");
         foodItem.price = new Scanner(System.in).nextInt();
         foodStore.add(foodItem);
+    }
+
+    public void editItem(FoodStore foodStore) {
+        try {
+            if (foodStore.getFoodList().get(0) != null) {
+                System.out.println("Enter the name of the food you want to modify : ");
+                String name = new Scanner(System.in).nextLine();
+                foodStore.modify(name);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("\nNo item in the list \n");
+        }
     }
 }
