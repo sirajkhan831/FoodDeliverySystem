@@ -1,6 +1,10 @@
 package com.bl.fooddeliverysystem;
 
+import java.sql.SQLException;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Scanner;
+
 
 // controller layer
 public class Application {
@@ -12,6 +16,7 @@ public class Application {
     static UserInterface userInterface = UserInterface.getInstance();
 
     public static void main(String[] args) {
+
         FoodStore foodStore = FoodStore.getInstance();
         userInterface.showMenu(foodStore);
         userInterface.print(foodStore.getFoodList());
@@ -90,10 +95,20 @@ public class Application {
     }
 
     public void editItem(FoodStore foodStore) {
+        boolean flag = false;
         try {
             if (foodStore.getFoodList().get(0) != null) {
                 System.out.println("Enter the name of the food you want to modify : ");
                 String name = new Scanner(System.in).nextLine();
+                for (int i = 0; i < foodStore.getFoodList().size(); i++) {
+                    if (name.equals(foodStore.getFoodList().get(i).getName())) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    throw new NoSuchElementException();
+                }
                 foodStore.modify(name);
             }
         } catch (IndexOutOfBoundsException e) {

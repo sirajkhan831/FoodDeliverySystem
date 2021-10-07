@@ -8,10 +8,10 @@ public class UserInterface {
     public static UserInterface instance;
 
     public void print(List<FoodItem> foodList) {
-        System.out.println("");
-        for (FoodItem foodItem : foodList) {
+/*        for (FoodItem foodItem : foodList) {
             System.out.println(foodItem);
-        }
+        }*/
+        foodList.forEach(System.out::println);
     }
 
     public static synchronized UserInterface getInstance() {
