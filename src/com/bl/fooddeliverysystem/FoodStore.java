@@ -1,15 +1,13 @@
 package com.bl.fooddeliverysystem;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 // this is data layer / model layer
 public class FoodStore {
     private static FoodStore instance;
 
     private final List<FoodItem> foodList = new ArrayList<>();
+    private final Set<FoodItem> foodSet = new HashSet<>();
 
     public static synchronized FoodStore getInstance() {
         if (instance == null) {
@@ -35,7 +33,7 @@ public class FoodStore {
     }
 
     public void modify(String name) {
-        for (FoodItem foodItem : foodList) {
+        foodList.forEach(foodItem -> {
             if (name.equals(foodItem.name)) {
                 System.out.println("Enter the option number for the field to modify : 1. Name 2. Taste 3. Category 4. VegType 5. Price");
                 int option = new Scanner(System.in).nextInt();
@@ -80,6 +78,10 @@ public class FoodStore {
                     }
                 }
             }
-        }
+        });
+    }
+
+    public FoodItem getFood(String foodName) {
+        return foodList.stream().filter(foodItem -> foodName.equals(foodItem.name)).findFirst().orElse(null);
     }
 }

@@ -95,21 +95,16 @@ public class Application {
     }
 
     public void editItem(FoodStore foodStore) {
-        boolean flag = false;
         try {
             if (foodStore.getFoodList().get(0) != null) {
                 System.out.println("Enter the name of the food you want to modify : ");
                 String name = new Scanner(System.in).nextLine();
-                for (int i = 0; i < foodStore.getFoodList().size(); i++) {
-                    if (name.equals(foodStore.getFoodList().get(i).getName())) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
+                if (name == null) {
                     throw new NoSuchElementException();
                 }
-                foodStore.modify(name);
+                if (name.equals(foodStore.getFood(name).getName())) {
+                    foodStore.modify(name);
+                }
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("\nNo item in the list \n");

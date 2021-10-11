@@ -8,9 +8,6 @@ public class UserInterface {
     public static UserInterface instance;
 
     public void print(List<FoodItem> foodList) {
-/*        for (FoodItem foodItem : foodList) {
-            System.out.println(foodItem);
-        }*/
         foodList.forEach(System.out::println);
     }
 
